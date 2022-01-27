@@ -6,7 +6,24 @@ public class Environment : MonoBehaviour
 {
     [SerializeField] Vector2Int size = new Vector2Int(5, 5);
     [SerializeField] Room roomPrefab;
-    [SerializeField] List<Room> rooms;
+    List<Room> roomList;
+    Room[,] roomArray;
+
+    public static Dictionary<Direction, Vector2> Direction2DValues = new Dictionary<Direction, Vector2>
+    {
+        {Direction.Up, Vector2.up},
+        {Direction.Down, Vector2.down},
+        {Direction.Left, Vector2.left},
+        {Direction.Right, Vector2.right}
+    };
+
+    public static Dictionary<Direction, Vector3> Direction3DValues = new Dictionary<Direction, Vector3>
+    {
+        {Direction.Up, Vector3.forward},
+        {Direction.Down, Vector3.back},
+        {Direction.Left, Vector3.left},
+        {Direction.Right, Vector3.right}
+    };
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +41,7 @@ public class Environment : MonoBehaviour
     void BuildEnvironment()
     {
         ClearEnvironment();
-        Room[,] roomArray = new Room[size.x, size.y];
+        
         for (int x = 0; x < size.x; x++)
         {
             for (int y = 0; y < size.y; y++)
@@ -32,7 +49,7 @@ public class Environment : MonoBehaviour
                 Room room = Instantiate(roomPrefab, new Vector3(x, 0, y), Quaternion.identity, transform);
                 room.name = $"Room ({x},{y})";
                 roomArray[x, y] = room;
-                rooms.Add(room);
+                roomList.Add(room);
                 //Get horizontal neighbor
                 if (x > 0)
                 {
@@ -50,10 +67,13 @@ public class Environment : MonoBehaviour
     [ContextMenu("Clear Environment")]
     void ClearEnvironment()
     {
-        for (int i = rooms.Count - 1; i >= 0; i--)
+        for (int i = roomList.Count - 1; i >= 0; i--)
         {
-            DestroyImmediate(rooms[i].gameObject);
+            DestroyImmediate(roomList[i].gameObject);
         }
-        rooms.Clear();
+        roomList = new List<Room>();
+        roomArray = new Room[size.x, size.y];
     }
+
+
 }
