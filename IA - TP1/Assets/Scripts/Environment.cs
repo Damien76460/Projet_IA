@@ -67,9 +67,9 @@ public class Environment : MonoBehaviour
     [ContextMenu("Clear Environment")]
     void ClearEnvironment()
     {
-        for (int i = roomList.Count - 1; i >= 0; i--)
+        for (int i = transform.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(roomList[i].gameObject);
+            DestroyImmediate(transform.GetChild(i).gameObject);
         }
         roomList = new List<Room>();
         roomArray = new Room[size.x, size.y];
