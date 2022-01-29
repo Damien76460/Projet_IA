@@ -9,6 +9,9 @@ public class Environment : MonoBehaviour
     List<Room> roomList;
     Room[,] roomArray;
 
+
+    public float spawnRate;
+
     public static Dictionary<Direction, Vector2> Direction2DValues = new Dictionary<Direction, Vector2>
     {
         {Direction.Up, Vector2.up},
@@ -29,6 +32,7 @@ public class Environment : MonoBehaviour
     void Start()
     {
         BuildEnvironment();
+        SpawnItems();
     }
 
     // Update is called once per frame
@@ -75,5 +79,49 @@ public class Environment : MonoBehaviour
         roomArray = new Room[size.x, size.y];
     }
 
+    void SpawnItems()
+    {
+        foreach (Room room in roomList)
+        {
+            if (GetSpawnBool())
+            {
+                int getItem = GetItemToSpawn();
+                room.AddItem(getItem);
+            }
+        }
+    }
 
+    bool GetSpawnBool()
+    {
+        float randomProbability = Random.value;
+        if (randomProbability > spawnRate)
+        {
+            return false;
+        } 
+        else
+        {
+            return true;
+        }
+    }
+
+    int GetItemToSpawn()
+    {
+        float randomItem = Random.value;
+        int whatToSpawn;
+        switch (randomItem)
+        {
+            //will spawn a jewel (40% rate)
+            case <= 0.4f:
+                whatToSpawn = 0;
+                return whatToSpawn;
+            //will spawn dust (40% rate)
+            case <= 0.8f:
+                whatToSpawn = 1;
+                return whatToSpawn;
+            //will spawn both (20% rate)
+            default:
+                whatToSpawn = 2;
+                return whatToSpawn;
+        }
+    }
 }
