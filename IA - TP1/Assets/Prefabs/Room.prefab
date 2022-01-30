@@ -97,5 +97,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   neighbors: []
-  jewelPrefab: {fileID: -3598977879027890981, guid: 361b334dd05d4dc4dae63b47de242abe, type: 3}
-  dustPrefab: {fileID: 5117810992584205579, guid: e43cbc93251c5724981d87200ffe3688, type: 3}
+  jewelPrefab: {fileID: 0}
+  dustPrefab: {fileID: 0}

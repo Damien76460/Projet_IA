@@ -6,6 +6,8 @@ public class Environment : MonoBehaviour
 {
     [SerializeField] Vector2Int size = new Vector2Int(5, 5);
     [SerializeField] Room roomPrefab;
+    [SerializeField] GameObject jewelPrefab;
+    [SerializeField] GameObject dustPrefab;
     List<Room> roomList;
     Room[,] roomArray;
 
@@ -83,45 +85,29 @@ public class Environment : MonoBehaviour
     {
         foreach (Room room in roomList)
         {
-            if (GetSpawnBool())
+            if (Random.value < spawnRate)
             {
-                int getItem = GetItemToSpawn();
-                room.AddItem(getItem);
+                float randomItem = Random.value;
+                GameObject jewel = null, dust = null;
+                switch (randomItem)
+                {
+                    //will spawn a jewel (40% rate)
+                    case float n when (n <= 0.4f):
+                        jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        break;
+                    //will spawn dust (40% rate)
+                    case float n when (n > 0.4f && n <= 0.8):
+                        dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        break;
+                    //will spawn both (20% rate)
+                    default:
+                        jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        break;
+                }
+                room.jewel = jewel;
+                room.dust = dust;
             }
-        }
-    }
-
-    bool GetSpawnBool()
-    {
-        float randomProbability = Random.value;
-        if (randomProbability > spawnRate)
-        {
-            return false;
-        } 
-        else
-        {
-            return true;
-        }
-    }
-
-    int GetItemToSpawn()
-    {
-        float randomItem = Random.value;
-        int whatToSpawn;
-        switch (randomItem)
-        {
-            //will spawn a jewel (40% rate)
-            case <= 0.4f:
-                whatToSpawn = 0;
-                return whatToSpawn;
-            //will spawn dust (40% rate)
-            case <= 0.8f:
-                whatToSpawn = 1;
-                return whatToSpawn;
-            //will spawn both (20% rate)
-            default:
-                whatToSpawn = 2;
-                return whatToSpawn;
         }
     }
 }
