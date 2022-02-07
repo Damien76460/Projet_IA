@@ -13,6 +13,8 @@ public class Environment : MonoBehaviour
 
 
     public float spawnRate;
+    public float spawnDeltaTime;
+    float lastSpawnTime;
 
     public static Dictionary<Direction, Vector2> Direction2DValues = new Dictionary<Direction, Vector2>
     {
@@ -40,7 +42,11 @@ public class Environment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Time.time > lastSpawnTime + spawnDeltaTime)
+        {
+            lastSpawnTime = Time.time;
+            SpawnItems();
+        }
     }
 
     [ContextMenu("Build Environment")]
