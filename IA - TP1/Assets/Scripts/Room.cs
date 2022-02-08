@@ -5,8 +5,8 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public List<Room> neighbors;
-    public GameObject jewel;
-    public GameObject dust;
+    public GameObject jewel = null;
+    public GameObject dust = null;
 
     public void RegisterNeighbor(Room room)
     {

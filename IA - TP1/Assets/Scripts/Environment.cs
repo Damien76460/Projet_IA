@@ -91,28 +91,31 @@ public class Environment : MonoBehaviour
     {
         foreach (Room room in roomList)
         {
-            if (Random.value < spawnRate)
+            if (room.dust == null && room.jewel == null)
             {
-                float randomItem = Random.value;
-                GameObject jewel = null, dust = null;
-                switch (randomItem)
+                if (Random.value < spawnRate)
                 {
-                    //will spawn a jewel (40% rate)
-                    case float n when (n <= 0.4f):
-                        jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
-                        break;
-                    //will spawn dust (40% rate)
-                    case float n when (n > 0.4f && n <= 0.8):
-                        dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
-                        break;
-                    //will spawn both (20% rate)
-                    default:
-                        jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
-                        dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
-                        break;
+                    float randomItem = Random.value;
+                    GameObject jewel = null, dust = null;
+                    switch (randomItem)
+                    {
+                        //will spawn a jewel (40% rate)
+                        case float n when (n <= 0.4f):
+                            jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
+                            break;
+                        //will spawn dust (40% rate)
+                        case float n when (n > 0.4f && n <= 0.8):
+                            dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
+                            break;
+                        //will spawn both (20% rate)
+                        default:
+                            jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
+                            dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
+                            break;
+                    }
+                    room.jewel = jewel;
+                    room.dust = dust;
                 }
-                room.jewel = jewel;
-                room.dust = dust;
             }
         }
     }
