@@ -8,13 +8,14 @@ public class Environment : MonoBehaviour
     [SerializeField] Room roomPrefab;
     [SerializeField] GameObject jewelPrefab;
     [SerializeField] GameObject dustPrefab;
-    List<Room> roomList;
+    public List<Room> roomList;
     Room[,] roomArray;
 
 
     public float spawnRate;
     public float spawnDeltaTime;
     float lastSpawnTime;
+
 
     public static Dictionary<Direction, Vector2> Direction2DValues = new Dictionary<Direction, Vector2>
     {
