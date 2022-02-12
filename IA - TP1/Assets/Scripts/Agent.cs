@@ -5,9 +5,10 @@ using UnityEngine;
 public class Agent : MonoBehaviour
 {
     public List<Room> perception;
-    public List<Room> objectsLocation;
-    public List<Room> sortedGoals;
-    bool testOnce = true;
+    public List<Room> beliefs;
+    public List<Room> desires;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,12 +18,9 @@ public class Agent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(testOnce)
-        {
-            SortByPriority();
-            testOnce = false;
-        }
-  
+        //A placer dans les coroutines
+        Scan();
+        UpdateMyStateBDI();
     }
 
     void Scan()
@@ -30,24 +28,24 @@ public class Agent : MonoBehaviour
         perception = FindObjectOfType<Environment>().RoomList;
     }
 
-    void FindObjects()
+    void AddBelief()
     {
+        beliefs.Clear();
         foreach (Room room in perception)
         {
             if (room.jewel != null || room.dust != null)
             {
-                objectsLocation.Add(room);
+                beliefs.Add(room);
             }
         }
     }
 
-    void SortByPriority()
+    void AddDesire()
     {
-        Scan();
-        FindObjects();
-        AddSpecificObject(objectsLocation, sortedGoals, "jewel");
-        AddSpecificObject(objectsLocation, sortedGoals, "dust");
-        AddSpecificObject(objectsLocation, sortedGoals, "both");
+        desires.Clear();
+        AddSpecificObject(beliefs, desires, "jewel");
+        AddSpecificObject(beliefs, desires, "dust");
+        AddSpecificObject(beliefs, desires, "both");
     }
 
     void AddSpecificObject(List<Room> checkedList, List<Room> newList, string whichObject)
@@ -78,5 +76,11 @@ public class Agent : MonoBehaviour
                     break;
             }
         }
+    }
+
+    void UpdateMyStateBDI()
+    {
+        AddBelief();
+        AddDesire();
     }
 }
