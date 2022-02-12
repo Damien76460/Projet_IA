@@ -4,23 +4,17 @@ using UnityEngine;
 
 public abstract class Action 
 {
-    public abstract void ExecuteAction(Room room);
-
-}
-
-public class Move : Action
-{
-    public override void ExecuteAction(Room room)
+    protected Room room;
+    public Action(Room room)
     {
-        //Move agent to room
-
+        this.room = room;
     }
-}
 
-public class Collect : Action
-{
-    public override void ExecuteAction(Room room)
+    public virtual IEnumerator ExecuteAction(Agent agent)
     {
-        //Collect room items
+        if (room == null || agent == null)
+        {
+            yield break;
+        }
     }
 }

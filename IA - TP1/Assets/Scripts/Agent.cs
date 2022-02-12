@@ -8,24 +8,52 @@ public class Agent : MonoBehaviour
     public List<Room> beliefs;
     public List<Room> desires;
 
+    public float speed = 1;
+    public Room currentRoom;
 
-    // Start is called before the first frame update
-    void Start()
+    public int cycleCount = 0;
+    public int jewelCollected = 0;
+    public int dustCleaned = 0;
+
+    private Environment environment;
+
+    public void InitAgent()
     {
-
+        StartCoroutine(Loop());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Loop()
     {
-        //A placer dans les coroutines
-        Scan();
-        UpdateMyStateBDI();
+        Debug.Log("Enter loop");
+        while (true)
+        {
+            Debug.Log($"Cycle #{cycleCount}");
+
+            Scan();
+            UpdateMyStateBDI();
+
+            List<Action> actionPlan = CreateActionPlan();
+
+            yield return ExecuteActionPlan(actionPlan);
+
+            cycleCount++;
+
+            //Loop breaking condition
+            if (cycleCount > 15)
+            {
+                Debug.Log("Exiting loop");
+                yield break;
+            }
+        }
     }
 
-    void Scan()
+    private void Scan()
     {
-        perception = FindObjectOfType<Environment>().RoomList;
+        if (environment == null)
+        {
+            environment = FindObjectOfType<Environment>();
+        }
+        perception = environment.RoomList;
     }
 
     void AddBelief()
@@ -82,5 +110,23 @@ public class Agent : MonoBehaviour
     {
         AddBelief();
         AddDesire();
+    }
+
+    private List<Action> CreateActionPlan()
+    {
+        currentRoom = perception[0];
+        List<Action> actionPlan = new List<Action>();
+        actionPlan.Add(new Move(perception[1]));
+        actionPlan.Add(new Move(perception[2]));
+        actionPlan.Add(new Collect(perception[2]));
+        return actionPlan;
+    }
+
+    private IEnumerator ExecuteActionPlan(List<Action> actionPlan)
+    {
+        foreach (var action in actionPlan)
+        {
+            yield return action.ExecuteAction(this);
+        }
     }
 }
