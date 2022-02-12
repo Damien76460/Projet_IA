@@ -8,7 +8,8 @@ public class Environment : MonoBehaviour
     [SerializeField] Room roomPrefab;
     [SerializeField] GameObject jewelPrefab;
     [SerializeField] GameObject dustPrefab;
-    public List<Room> roomList;
+    List<Room> roomList;
+    public List<Room> RoomList { get => roomList; }
     Room[,] roomArray;
 
 
@@ -16,28 +17,18 @@ public class Environment : MonoBehaviour
     public float spawnDeltaTime;
     float lastSpawnTime;
 
-
-    public static Dictionary<Direction, Vector2> Direction2DValues = new Dictionary<Direction, Vector2>
-    {
-        {Direction.Up, Vector2.up},
-        {Direction.Down, Vector2.down},
-        {Direction.Left, Vector2.left},
-        {Direction.Right, Vector2.right}
-    };
-
-    public static Dictionary<Direction, Vector3> Direction3DValues = new Dictionary<Direction, Vector3>
-    {
-        {Direction.Up, Vector3.forward},
-        {Direction.Down, Vector3.back},
-        {Direction.Left, Vector3.left},
-        {Direction.Right, Vector3.right}
-    };
-
-    // Start is called before the first frame update
-    void Start()
+    public void InitEnvironment()
     {
         BuildEnvironment();
         SpawnItems();
+    }
+
+    IEnumerator Loop()
+    {
+        while (true)
+        {
+
+        }
     }
 
     // Update is called once per frame
