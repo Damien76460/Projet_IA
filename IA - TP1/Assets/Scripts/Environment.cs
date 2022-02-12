@@ -14,29 +14,22 @@ public class Environment : MonoBehaviour
 
 
     public float spawnRate;
-    public float spawnDeltaTime;
-    float lastSpawnTime;
+    public float minSpawnTime;
+    public float maxSpawnTime;
 
     public void InitEnvironment()
     {
         BuildEnvironment();
         SpawnItems();
+        StartCoroutine(Loop());
     }
 
     IEnumerator Loop()
     {
         while (true)
         {
-
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Time.time > lastSpawnTime + spawnDeltaTime)
-        {
-            lastSpawnTime = Time.time;
+            float spawnTime = Random.Range(minSpawnTime,maxSpawnTime);
+            yield return new WaitForSeconds(spawnTime);
             SpawnItems();
         }
     }
