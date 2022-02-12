@@ -9,6 +9,7 @@ public class Environment : MonoBehaviour
     [SerializeField] GameObject jewelPrefab;
     [SerializeField] GameObject dustPrefab;
     List<Room> roomList;
+    public List<Room> RoomList { get => roomList; }
     Room[,] roomArray;
 
 
@@ -31,6 +32,7 @@ public class Environment : MonoBehaviour
         {Direction.Left, Vector3.left},
         {Direction.Right, Vector3.right}
     };
+
 
     // Start is called before the first frame update
     void Start()
