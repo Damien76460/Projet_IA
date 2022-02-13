@@ -9,8 +9,12 @@ public class test : MonoBehaviour
     [ContextMenu("Test nav")]
     void TestNav()
     {
+
         Navigation nav = new Navigation();
-        nav.BFS(env.roomList[0]);
-        
+        nav.BFS(env.roomList[0], env.roomList[1], env);
+        nav.A_Star(env.roomList[0], env.roomList[1], env);
+
+
+
     }
 }
