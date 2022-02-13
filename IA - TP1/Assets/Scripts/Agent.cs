@@ -11,14 +11,48 @@ public class Agent : MonoBehaviour
     public float speed = 1;
     public Room currentRoom;
 
-    public int cycleCount = 0;
-    public int jewelCollected = 0;
-    public int dustCleaned = 0;
+    private int cycleCount = 0;
+    private int jewelCollected = 0;
+    private int dustCleaned = 0;
 
-    private Environment environment;
+    private GameManager gameManager;
 
-    public void InitAgent()
+    public int CycleCount
     {
+        get => cycleCount; 
+        set
+        {
+            cycleCount = value;
+            gameManager.UIManager.iterationText.text = $"ITERATION : {cycleCount}";
+        }
+    }
+    public int JewelCollected 
+    { 
+        get => jewelCollected;
+        set
+        {
+            jewelCollected = value;
+            gameManager.UIManager.jewelText.text = jewelCollected.ToString();
+        }
+    }
+    public int DustCleaned 
+    { 
+        get => dustCleaned;
+        set
+        {
+            dustCleaned = value;
+            gameManager.UIManager.dustText.text = dustCleaned.ToString();
+        }
+    }
+
+    public void InitAgent(GameManager gameManager, Room startRoom)
+    {
+        this.gameManager = gameManager;
+
+        //Set agent' start position
+        currentRoom = startRoom;
+        transform.position = currentRoom.transform.position;
+
         StartCoroutine(Loop());
     }
 
@@ -27,7 +61,7 @@ public class Agent : MonoBehaviour
         Debug.Log("Enter loop");
         while (true)
         {
-            Debug.Log($"Cycle #{cycleCount}");
+            Debug.Log($"Cycle #{CycleCount}");
 
             Scan();
             UpdateMyStateBDI();
@@ -36,10 +70,10 @@ public class Agent : MonoBehaviour
 
             yield return ExecuteActionPlan(actionPlan);
 
-            cycleCount++;
+            CycleCount++;
 
             //Loop breaking condition
-            if (cycleCount > 15)
+            if (CycleCount > 15)
             {
                 Debug.Log("Exiting loop");
                 yield break;
@@ -49,11 +83,7 @@ public class Agent : MonoBehaviour
 
     private void Scan()
     {
-        if (environment == null)
-        {
-            environment = FindObjectOfType<Environment>();
-        }
-        perception = environment.RoomList;
+        perception = gameManager.environment.RoomList;
     }
 
     void AddBelief()
@@ -116,9 +146,11 @@ public class Agent : MonoBehaviour
     {
         currentRoom = perception[0];
         List<Action> actionPlan = new List<Action>();
-        actionPlan.Add(new Move(perception[1]));
-        actionPlan.Add(new Move(perception[2]));
-        actionPlan.Add(new Collect(perception[2]));
+        actionPlan.Add(new Move(Direction.Right));
+        actionPlan.Add(new Move(Direction.Up));
+        actionPlan.Add(new Move(Direction.Right));
+        actionPlan.Add(new Move(Direction.Left));
+        actionPlan.Add(new Collect());
         return actionPlan;
     }
 
