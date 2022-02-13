@@ -12,15 +12,17 @@ public class Environment : MonoBehaviour
     public List<Room> RoomList { get => roomList; }
     Room[,] roomArray;
 
-
+    public int itemsAmountOnStart;
     public float spawnRate;
     public float minSpawnTime;
     public float maxSpawnTime;
+    public float jewelRate;
+    public float dustRate;
 
     public void InitEnvironment()
     {
         BuildEnvironment();
-        SpawnItems();
+        SpawnInitItems();
         StartCoroutine(Loop());
     }
 
@@ -74,34 +76,44 @@ public class Environment : MonoBehaviour
 
     void SpawnItems()
     {
-        foreach (Room room in roomList)
+        int randomRoom = Random.Range(0, roomList.Count);
+        Room room = roomList[randomRoom];
+        if (room.dust == null && room.jewel == null)
         {
-            if (room.dust == null && room.jewel == null)
+            if (Random.value < spawnRate)
             {
-                if (Random.value < spawnRate)
+                float randomItem = Random.value;
+                GameObject jewel = null, dust = null;
+                switch (randomItem)
                 {
-                    float randomItem = Random.value;
-                    GameObject jewel = null, dust = null;
-                    switch (randomItem)
-                    {
-                        //will spawn a jewel (40% rate)
-                        case float n when (n <= 0.4f):
-                            jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
-                            break;
-                        //will spawn dust (40% rate)
-                        case float n when (n > 0.4f && n <= 0.8):
-                            dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
-                            break;
-                        //will spawn both (20% rate)
-                        default:
-                            jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
-                            dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
-                            break;
-                    }
-                    room.jewel = jewel;
-                    room.dust = dust;
+                    //will spawn a jewel
+                    case float n when (n <= jewelRate):
+                        jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        break;
+                    //will spawn dust
+                    case float n when (n > jewelRate && n <= jewelRate+dustRate):
+                        dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        break;
+                    //will spawn both
+                    default:
+                        jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
+                        break;
                 }
+                room.jewel = jewel;
+                room.dust = dust;
             }
         }
+    }
+
+    void SpawnInitItems()
+    {
+        float tmpSpawn = spawnRate;
+        spawnRate = 1f;
+        for (int i = 0; i <= itemsAmountOnStart; i++)
+        {
+            SpawnItems();
+        }
+        spawnRate = tmpSpawn;
     }
 }
