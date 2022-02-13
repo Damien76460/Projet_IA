@@ -4,16 +4,29 @@ using UnityEngine;
 
 public class Move : Action
 {
-    public Move(Room room) : base(room) { }
+    public Direction direction;
+    public Move(Direction direction)
+    {
+        this.direction = direction;
+    }
 
     public override IEnumerator ExecuteAction(Agent agent)
     {
-        base.ExecuteAction(agent);
-        Debug.Log($"{agent} moving to {room}");
+        Debug.Log($"{agent} moving {direction}");
 
         float timer = 0f;
+        if (agent.currentRoom.directedNeighbors.TryGetValue(direction, out Room targetRoom))
+        {
+            Debug.Log(targetRoom);
+        }
+        else
+        {
+            Debug.Log("No room in this direction");
+        }
+        
+        Debug.Log(targetRoom);
         Vector3 originPos = agent.currentRoom.transform.position;
-        Vector3 targetPos = room.transform.position;
+        Vector3 targetPos = targetRoom.transform.position;
         float duration = Vector3.Distance(originPos, targetPos) / agent.speed;
         while (timer <= duration)
         {
@@ -24,7 +37,7 @@ public class Move : Action
 
             yield return null;
         }
-        yield return null;
-        agent.currentRoom = room;
+        agent.currentRoom = targetRoom;
+        agent.transform.position = targetPos;
     }
 }

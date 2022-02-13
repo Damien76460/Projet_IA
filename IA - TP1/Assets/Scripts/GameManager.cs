@@ -6,10 +6,11 @@ public class GameManager : MonoBehaviour
 {
     public Environment environment;
     public Agent agent;
+    public UIManager UIManager;
 
     private void Start()
     {
         environment.InitEnvironment();
-        agent.InitAgent();
+        agent.InitAgent(this, environment.RoomList[0]);
     }
 }

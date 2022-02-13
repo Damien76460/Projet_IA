@@ -50,12 +50,12 @@ public class Environment : MonoBehaviour
                 //Get horizontal neighbor
                 if (x > 0)
                 {
-                    roomArray[x, y].RegisterNeighbor(roomArray[x - 1, y]);
+                    roomArray[x, y].RegisterNeighbor(roomArray[x - 1, y], Direction.Left);
                 }
                 //Get vertical neighbor
                 if (y > 0)
                 {
-                    roomArray[x, y].RegisterNeighbor(roomArray[x, y - 1]);
+                    roomArray[x, y].RegisterNeighbor(roomArray[x, y - 1], Direction.Down);
                 }
             }
         }
