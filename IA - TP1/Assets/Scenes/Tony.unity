@@ -185,6 +185,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3571846944966511397, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
+      propertyPath: dustRate
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571846944966511397, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
+      propertyPath: jewelRate
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571846944966511397, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
+      propertyPath: spawnRate
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571846944966511397, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
+      propertyPath: maxSpawnTime
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571846944966511397, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
+      propertyPath: minSpawnTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571846944966511397, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
+      propertyPath: itemsAmountOnStart
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3571846944966511399, guid: 11289df38a0e64a4c8a29acfc4e90f72, type: 3}
       propertyPath: m_Name
       value: Environment
@@ -468,9 +492,6 @@ MonoBehaviour:
   desires: []
   speed: 1
   currentRoom: {fileID: 0}
-  cycleCount: 0
-  jewelCollected: 0
-  dustCleaned: 0
 --- !u!4 &1709342428
 Transform:
   m_ObjectHideFlags: 0
