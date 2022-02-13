@@ -12,6 +12,7 @@ public class Environment : MonoBehaviour
     public List<Room> RoomList { get => roomList; }
     Room[,] roomArray;
 
+    //Environment variables about items spawning
     public int itemsAmountOnStart;
     public float spawnRate;
     public float minSpawnTime;
@@ -74,8 +75,9 @@ public class Environment : MonoBehaviour
         roomArray = new Room[size.x, size.y];
     }
 
+    //Spawn random items in random selected rooms
     void SpawnItems()
-    {
+    {   
         int randomRoom = Random.Range(0, roomList.Count);
         Room room = roomList[randomRoom];
         if (room.dust == null && room.jewel == null)
@@ -86,15 +88,15 @@ public class Environment : MonoBehaviour
                 GameObject jewel = null, dust = null;
                 switch (randomItem)
                 {
-                    //will spawn a jewel
+                    //Will spawn a jewel
                     case float n when (n <= jewelRate):
                         jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
                         break;
-                    //will spawn dust
+                    //Will spawn dust
                     case float n when (n > jewelRate && n <= jewelRate+dustRate):
                         dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
                         break;
-                    //will spawn both
+                    //Will spawn both items
                     default:
                         jewel = Instantiate(jewelPrefab, room.transform.position, Quaternion.identity, room.transform);
                         dust = Instantiate(dustPrefab, room.transform.position, Quaternion.identity, room.transform);
@@ -106,6 +108,7 @@ public class Environment : MonoBehaviour
         }
     }
 
+    //Spawn the desired amount of items before start
     void SpawnInitItems()
     {
         float tmpSpawn = spawnRate;
