@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public Agent agent;
     public UIManager UIManager;
 
+    //Call Agent and Environment Threads to start them
     private void Start()
     {
         environment.InitEnvironment();
