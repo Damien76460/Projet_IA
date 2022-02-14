@@ -160,6 +160,7 @@ public class Agent : MonoBehaviour
         UpdateDesire();
     }
 
+    //Function that creates the action plan for every desire
     private List<Action> CreateActionPlan()
     {
         Navigation nav = new Navigation();
@@ -183,6 +184,7 @@ public class Agent : MonoBehaviour
         return actionPlan;
     }
 
+    //Function that create the action plan for one desire
     private List<Action> CreateActionPlanFromPath(List<Room> rooms)
     {
         List<Action> actionPlan = new List<Action>();
@@ -208,6 +210,7 @@ public class Agent : MonoBehaviour
         return actionPlan;
     }
 
+    //Agent's effector
     private IEnumerator ExecuteActionPlan(List<Action> actionPlan)
     {
         foreach (var action in actionPlan)

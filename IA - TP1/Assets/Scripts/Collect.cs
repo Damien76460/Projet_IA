@@ -6,7 +6,6 @@ public class Collect : Action
 {
     public Collect() { }
 
-    //Agent effector
     public override IEnumerator ExecuteAction(Agent agent)
     {
         Room room = agent.currentRoom;
