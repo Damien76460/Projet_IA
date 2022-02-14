@@ -59,11 +59,8 @@ public class Agent : MonoBehaviour
     //Function that will be executed as a Thread for Agent behavior
     IEnumerator Loop()
     {
-        Debug.Log("Enter loop");
         while (true)
         {
-            Debug.Log($"Cycle #{CycleCount}");
-
             Scan();
             UpdateMyStateBDI();
 
