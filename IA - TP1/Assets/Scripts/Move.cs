@@ -12,8 +12,6 @@ public class Move : Action
 
     public override IEnumerator ExecuteAction(Agent agent)
     {
-        Debug.Log($"{agent} moving {direction}");
-
         float timer = 0f;
         if (!agent.currentRoom.directedNeighbor.TryGetValue(direction, out Room targetRoom))
         {

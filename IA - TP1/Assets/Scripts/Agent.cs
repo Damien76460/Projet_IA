@@ -15,6 +15,8 @@ public class Agent : MonoBehaviour
     private int jewelCollected = 0;
     private int dustCleaned = 0;
 
+    private bool informedSearch = false;
+
     private GameManager gameManager;
 
     public int CycleCount
@@ -45,6 +47,18 @@ public class Agent : MonoBehaviour
         }
     }
 
+    public bool InformedSearch
+    { 
+        get => informedSearch;
+        set
+        {
+            informedSearch = value;
+            gameManager.UIManager.UpdateSearchText(informedSearch);
+        }
+    }
+
+    public GameManager GameManager { get => gameManager; }
+
     public void InitAgent(GameManager gameManager, Room startRoom)
     {
         this.gameManager = gameManager;
@@ -58,16 +72,12 @@ public class Agent : MonoBehaviour
 
     IEnumerator Loop()
     {
-        Debug.Log("Enter loop");
         while (true)
         {
-            Debug.Log($"Cycle #{CycleCount}");
-
             Scan();
             UpdateMyStateBDI();
 
             List<Action> actionPlan = CreateActionPlan();
-            gameManager.UIManager.EnqueueActionUI(actionPlan);
 
             yield return ExecuteActionPlan(actionPlan);
 
@@ -85,6 +95,7 @@ public class Agent : MonoBehaviour
     private void Scan()
     {
         perception = gameManager.environment.RoomList;
+        gameManager.UIManager.UpdatePerceptionUI(perception);
     }
 
     void UpdateBelief()
@@ -150,8 +161,15 @@ public class Agent : MonoBehaviour
         for (int i = 0; i < desires.Count; i++)
         {
             List<Room> roomToVisit;
-            roomToVisit = nav.BFS( i==0 ? currentRoom : desires[i -1], desires[i], gameManager.environment);
-
+            if (informedSearch)
+            {
+                roomToVisit = nav.A_Star(i == 0 ? currentRoom : desires[i - 1], desires[i], gameManager.environment);
+            }
+            else
+            {
+                roomToVisit = nav.BFS(i == 0 ? currentRoom : desires[i - 1], desires[i], gameManager.environment);
+            }
+            
             List<Action> pathActionPlan = CreateActionPlanFromPath(roomToVisit);
             actionPlan.AddRange(pathActionPlan);
             
@@ -180,6 +198,7 @@ public class Agent : MonoBehaviour
                 }
             }
         }
+        gameManager.UIManager.EnqueueActionUI(actionPlan);
         return actionPlan;
     }
 

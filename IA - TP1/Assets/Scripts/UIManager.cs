@@ -17,33 +17,49 @@ public class UIManager : MonoBehaviour
     public VerticalLayoutGroup actionQueue;
     public GameObject actionUIElement;
 
+    public void UpdateSearchText(bool informedSearch)
+    {
+        if (informedSearch)
+        {
+            searchText.text = "Informed search";
+        }
+        else
+        {
+            searchText.text = "Uninformed search";
+        }
+    }
+
+    public void UpdateSelectedPerceptionUI(int index, Room room)
+    {
+        Transform cell = perceptionMap.transform.GetChild(index);
+        Image image = cell.GetChild(0).GetComponent<Image>();
+        if (room.dust != null && room.jewel != null)
+        {
+            image.sprite = bothSprite;
+            image.color = Color.white;
+        }
+        else if (room.dust != null)
+        {
+            image.sprite = dustSprite;
+            image.color = Color.white;
+        }
+        else if (room.jewel != null)
+        {
+            image.sprite = jewelSprite;
+            image.color = Color.white;
+        }
+        else
+        {
+            image.sprite = null;
+            image.color = Color.clear;
+        }
+    }
 
     public void UpdatePerceptionUI(List<Room> rooms)
     {
         for (int i = 0; i < rooms.Count; i++)
         {
-            Transform cell = perceptionMap.transform.GetChild(i);
-            Image image = cell.GetChild(0).GetComponent<Image>();
-            if (rooms[i].dust != null && rooms[i].jewel != null)
-            {
-                image.sprite = bothSprite;
-                image.color = Color.white;
-            }
-            else if (rooms[i].dust != null)
-            {
-                image.sprite = dustSprite;
-                image.color = Color.white;
-            }
-            else if (rooms[i].jewel != null)
-            {
-                image.sprite = jewelSprite;
-                image.color = Color.white;
-            }
-            else
-            {
-                image.sprite = null;
-                image.color = Color.clear;
-            }
+            UpdateSelectedPerceptionUI(i, rooms[i]);
         }
     }
 

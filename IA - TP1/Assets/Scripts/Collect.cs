@@ -14,28 +14,34 @@ public class Collect : Action
         //Collect room items
         if (room.jewel != null && room.dust != null)
         {
-            Debug.Log($"{agent} has cleaned dust with a jewel in {room}");
             agent.DustCleaned++;
-            Object.Destroy(room.dust.gameObject);
-            Object.Destroy(room.jewel.gameObject);
+            GameObject dust = room.dust.gameObject;
+            GameObject jewel = room.jewel.gameObject;
+            room.dust = null;
+            room.jewel = null;
+            Object.Destroy(dust);
+            Object.Destroy(jewel);
         }
         else if (room.jewel != null)
         {
-            Debug.Log($"{agent} has collected a jewel in {room}");
             agent.JewelCollected++;
-            Object.Destroy(room.jewel.gameObject);
+            GameObject jewel = room.jewel.gameObject;
+            room.jewel = null;
+            Object.Destroy(jewel);
         }
         else if (room.dust != null)
         {
-            Debug.Log($"{agent} has cleaned dust in {room}");
             agent.DustCleaned++;
-            Object.Destroy(room.dust.gameObject);
+            GameObject dust = room.dust.gameObject;
+            room.dust = null;
+            Object.Destroy(dust);
         }
         else
         {
-            Debug.Log($"{agent} has nothing to collect in {room}");
+
         }
-        Debug.Log($"Current room {agent.currentRoom}");
+
+        agent.GameManager.UIManager.UpdateSelectedPerceptionUI(agent.perception.IndexOf(room), room);
     }
 
     public override string ToString()
