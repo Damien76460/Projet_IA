@@ -11,6 +11,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         environment.InitEnvironment();
-        agent.InitAgent(this, environment.RoomList[0]);
+        agent.InitAgent(this, environment.RoomList[12]);
     }
 }

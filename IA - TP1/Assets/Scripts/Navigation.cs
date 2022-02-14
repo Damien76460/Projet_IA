@@ -7,7 +7,6 @@ using System.Linq;
 
 public class Navigation
 {
-
     public List<Room> BFS(Room StartRoom, Room EndRoom, Environment env)
     {
         // List of Rooms who is visited 
@@ -18,10 +17,10 @@ public class Navigation
         roomListVisited.Add(StartRoom);
         //Init Reconstruction_Path at null matrice 5x5
 
-        Dictionary<Room, Room> Reconstruction_Path = new Dictionary<Room, Room>(env.roomList.Count);
-        for (int i = 0; i < env.roomList.Count; i++)
+        Dictionary<Room, Room> Reconstruction_Path = new Dictionary<Room, Room>(env.RoomList.Count);
+        for (int i = 0; i < env.RoomList.Count; i++)
         {
-            Reconstruction_Path.Add(env.roomList[i], null);
+            Reconstruction_Path.Add(env.RoomList[i], null);
         }
 
         while (Queue.Count != 0)
@@ -45,10 +44,10 @@ public class Navigation
     public List<Room> A_Star(Room StartRoom, Room EndRoom, Environment env)
     {
         // Dictionary (Cout,distance,heuristique)
-        Dictionary<Room, Vector3> Heuristique = new Dictionary<Room, Vector3>(env.roomList.Count);
-        for (int i = 0; i < env.roomList.Count; i++)
+        Dictionary<Room, Vector3> Heuristique = new Dictionary<Room, Vector3>(env.RoomList.Count);
+        for (int i = 0; i < env.RoomList.Count; i++)
         {
-            Heuristique.Add(env.roomList[i], new Vector3(0,0,0)); 
+            Heuristique.Add(env.RoomList[i], new Vector3(0,0,0)); 
         }
 
         // Creation of openList and closeList
@@ -60,10 +59,10 @@ public class Navigation
         
         //Init Reconstruction_Path at null matrice 5x5
 
-        Dictionary<Room, Room> Reconstruction_Path = new Dictionary<Room, Room>(env.roomList.Count);
-        for (int i = 0; i < env.roomList.Count; i++)
+        Dictionary<Room, Room> Reconstruction_Path = new Dictionary<Room, Room>(env.RoomList.Count);
+        for (int i = 0; i < env.RoomList.Count; i++)
         {
-            Reconstruction_Path.Add(env.roomList[i], null);
+            Reconstruction_Path.Add(env.RoomList[i], null);
         }
 
         float Room_MinHeuristique = Heuristique[StartRoom].z;
@@ -144,11 +143,6 @@ public class Navigation
         }
 
         Return_Path.Reverse();
-        Debug.Log("Build Path : ");
-        for (int elem = 0; elem < Return_Path.Count; elem++)
-        {
-            Debug.Log("Result" + Return_Path[elem]);
-        }
         return Return_Path;
     }
 

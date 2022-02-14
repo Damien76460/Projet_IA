@@ -5,7 +5,8 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public List<Room> neighbors = new List<Room>();
-    public Dictionary<Direction, Room> directedNeighbors = new Dictionary<Direction, Room>();
+    public Dictionary<Room, Direction> neighborDirection = new Dictionary<Room, Direction>();
+    public Dictionary<Direction, Room> directedNeighbor = new Dictionary<Direction, Room>();
     public GameObject jewel = null;
     public GameObject dust = null;
 
@@ -18,7 +19,13 @@ public class Room : MonoBehaviour
     public void RegisterNeighbor(Room room, Direction direction)
     {
         RegisterNeighbor(room);
-        directedNeighbors.Add(direction, room);
-        room.directedNeighbors.Add(DirectionUtils.GetOppositeDirection(direction), this);
+
+        directedNeighbor.Add(direction, room);
+        neighborDirection.Add(room, direction);
+
+        Direction oppositeDirection = DirectionUtils.GetOppositeDirection(direction);
+
+        room.neighborDirection.Add(this, oppositeDirection);
+        room.directedNeighbor.Add(oppositeDirection, this);
     }
 }

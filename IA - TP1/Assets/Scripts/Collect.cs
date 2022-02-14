@@ -9,7 +9,7 @@ public class Collect : Action
     public override IEnumerator ExecuteAction(Agent agent)
     {
         Room room = agent.currentRoom;
-        yield return null;
+        yield return new WaitForSeconds(0.5f);
 
         //Collect room items
         if (room.jewel != null && room.dust != null)
@@ -35,8 +35,12 @@ public class Collect : Action
         {
             Debug.Log($"{agent} has nothing to collect in {room}");
         }
+        Debug.Log($"Current room {agent.currentRoom}");
+    }
 
-       
+    public override string ToString()
+    {
+        return "Vacuum";
     }
 }
 

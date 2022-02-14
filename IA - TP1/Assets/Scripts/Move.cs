@@ -15,16 +15,10 @@ public class Move : Action
         Debug.Log($"{agent} moving {direction}");
 
         float timer = 0f;
-        if (agent.currentRoom.directedNeighbors.TryGetValue(direction, out Room targetRoom))
+        if (!agent.currentRoom.directedNeighbor.TryGetValue(direction, out Room targetRoom))
         {
-            Debug.Log(targetRoom);
+            yield break;
         }
-        else
-        {
-            Debug.Log("No room in this direction");
-        }
-        
-        Debug.Log(targetRoom);
         Vector3 originPos = agent.currentRoom.transform.position;
         Vector3 targetPos = targetRoom.transform.position;
         float duration = Vector3.Distance(originPos, targetPos) / agent.speed;
@@ -39,5 +33,23 @@ public class Move : Action
         }
         agent.currentRoom = targetRoom;
         agent.transform.position = targetPos;
+    }
+
+
+    public override string ToString()
+    {
+        switch (direction)
+        {
+            case Direction.Up:
+                return "Move up";
+            case Direction.Left:
+                return "Move left";
+            case Direction.Down:
+                return "Move down";
+            case Direction.Right:
+                return "Move right";
+            default:
+                return "Error";
+        }
     }
 }
