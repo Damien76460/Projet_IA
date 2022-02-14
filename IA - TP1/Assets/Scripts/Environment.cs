@@ -27,6 +27,7 @@ public class Environment : MonoBehaviour
         StartCoroutine(Loop());
     }
 
+    //Function that will be executed as a Thread for the Environment
     IEnumerator Loop()
     {
         while (true)

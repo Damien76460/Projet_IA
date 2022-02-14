@@ -56,6 +56,7 @@ public class Agent : MonoBehaviour
         StartCoroutine(Loop());
     }
 
+    //Function that will be executed as a Thread for Agent behavior
     IEnumerator Loop()
     {
         Debug.Log("Enter loop");
@@ -82,11 +83,13 @@ public class Agent : MonoBehaviour
         }
     }
 
+    //Agent sensors
     private void Scan()
     {
         perception = gameManager.environment.RoomList;
     }
 
+    //Modify Agent's beliefs depending on what sensors perceive
     void UpdateBelief()
     {
         beliefs.Clear();
@@ -98,7 +101,8 @@ public class Agent : MonoBehaviour
             }
         }
     }
-
+    
+    //Modify Agent's desires depending on current belief
     void UpdateDesire()
     {
         desires.Clear();
@@ -107,6 +111,7 @@ public class Agent : MonoBehaviour
         AddSpecificObject(beliefs, desires, "both");
     }
 
+    //Will spawn an object if it doesn't exist yet
     void AddSpecificObject(List<Room> checkedList, List<Room> newList, string whichObject)
     {
         foreach (Room room in checkedList)
@@ -137,6 +142,7 @@ public class Agent : MonoBehaviour
         }
     }
 
+    //Function that handle the Agent Mental State BDI
     void UpdateMyStateBDI()
     {
         UpdateBelief();
