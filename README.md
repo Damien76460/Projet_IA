@@ -29,10 +29,10 @@ Dans le cadre du cours 8INF846 - Intelligence Artificielle, nous avons développ
 
 ## Lancement et Utilisation
 
-L'application se lance grâce au fichier suivant :
+L'application se lance grâce au fichier suivant présent dans la branche build:
 
 ```sh
-Aspirobot.exe
+Projet_IA/IA - TP1/TP1-Build/Aspirobot.exe
 ```
 
 Il n'y a aucune interaction à fournir, l'aspirateur va se mettre en marche dès le lancement du programme. Une interface affiche les informations liées au travail de l'agent.
