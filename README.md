@@ -38,3 +38,5 @@ Aspirobot.exe
 Il n'y a aucune interaction à fournir, l'aspirateur va se mettre en marche dès le lancement du programme. Une interface affiche les informations liées au travail de l'agent.
 
 ## Problèmes connus
+
+- Des fois, le robot aspire tous les déchets au moment où il passe en mode recherche informée, ce qui cause l'arret du programme. Cela est dû au coté aléatoire du spawner d'objet, il faut relancer le programme.
