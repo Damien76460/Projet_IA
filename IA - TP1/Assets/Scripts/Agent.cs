@@ -26,8 +26,11 @@ public class Agent : MonoBehaviour
         get => cycleCount; 
         set
         {
-            cycleCount = value;
-            gameManager.UIManager.iterationText.text = $"ITERATION : {cycleCount}";
+            if (InformedSearch || beliefs.Count != 0)
+            {
+                cycleCount = value;
+                gameManager.UIManager.iterationText.text = $"ITERATION : {cycleCount}";
+            }
         }
     }
     public int JewelCollected 
@@ -89,7 +92,7 @@ public class Agent : MonoBehaviour
     }
 
     //Agent sensors
-    private void Scan()
+    void Scan()
     {
         perception = gameManager.environment.RoomList;
         gameManager.UIManager.UpdatePerceptionUI(perception);
@@ -157,13 +160,11 @@ public class Agent : MonoBehaviour
         if (beliefs.Count == 0 && InformedSearch)
         {
             gameManager.StopThread();
-            Debug.Log("Eho ca va bien ?");
         }
 
         if (jewelCollected + dustCleaned > itemNeededToStartInformedSearch && !InformedSearch)
         {
             InformedSearch = true;
-            Debug.Log("Youhou je suis ici !");
         }
     }
 
