@@ -14,4 +14,10 @@ public class GameManager : MonoBehaviour
         environment.InitEnvironment();
         agent.InitAgent(this, environment.RoomList[12]);
     }
+
+    public void StopThread()
+    {
+        environment.StopAllCoroutines();
+        agent.StopAllCoroutines();
+    }
 }

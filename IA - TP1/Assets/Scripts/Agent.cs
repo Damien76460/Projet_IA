@@ -11,6 +11,8 @@ public class Agent : MonoBehaviour
     public float speed = 1;
     public Room currentRoom;
 
+    public int itemNeededToStartInformedSearch = 10;
+
     private int cycleCount = 0;
     private int jewelCollected = 0;
     private int dustCleaned = 0;
@@ -83,13 +85,6 @@ public class Agent : MonoBehaviour
             yield return ExecuteActionPlan(actionPlan);
 
             CycleCount++;
-
-            //Loop breaking condition
-            /*if (CycleCount > 15)
-            {
-                Debug.Log("Exiting loop");
-                yield break;
-            }*/
         }
     }
 
@@ -158,6 +153,18 @@ public class Agent : MonoBehaviour
     {
         UpdateBelief();
         UpdateDesire();
+
+        if (beliefs.Count == 0 && InformedSearch)
+        {
+            gameManager.StopThread();
+            Debug.Log("Eho ca va bien ?");
+        }
+
+        if (jewelCollected + dustCleaned > itemNeededToStartInformedSearch && !InformedSearch)
+        {
+            InformedSearch = true;
+            Debug.Log("Youhou je suis ici !");
+        }
     }
 
     //Function that creates the action plan for every desire
