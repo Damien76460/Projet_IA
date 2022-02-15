@@ -49,8 +49,8 @@ MonoBehaviour:
   jewelPrefab: {fileID: 7580091143532818087, guid: 361b334dd05d4dc4dae63b47de242abe, type: 3}
   dustPrefab: {fileID: 9004583271528459966, guid: e43cbc93251c5724981d87200ffe3688, type: 3}
   itemsAmountOnStart: 5
-  spawnRate: 0.75
-  minSpawnTime: 3
-  maxSpawnTime: 6
+  spawnRate: 0.8
+  minSpawnTime: 2.5
+  maxSpawnTime: 5.5
   jewelRate: 0.25
   dustRate: 0.65

@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   environment: {fileID: 0}
   agent: {fileID: 0}
+  UIManager: {fileID: 0}

@@ -133,6 +133,4 @@ MonoBehaviour:
   desires: []
   speed: 1
   currentRoom: {fileID: 0}
-  cycleCount: 0
-  jewelCollected: 0
-  dustCleaned: 0
+  itemNeededToStartInformedSearch: 10
